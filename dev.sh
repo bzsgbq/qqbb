@@ -72,9 +72,15 @@ update_branch_to_main() {
         # 检查变基是否成功
         if [ $? -eq 0 ]; then
             echo "✅ 分支 $branch_name 已更新到最新 main"
-            # 强制推送到远程（因为变基改变了历史）
-            git push -f origin "$branch_name"
-            echo "✅ 已强制推送到远程分支"
+            
+            # 检查远程分支是否存在
+            if git ls-remote --heads origin "$branch_name" | grep -q "$branch_name"; then
+                # 远程分支存在，强制推送
+                git push -f origin "$branch_name"
+                echo "✅ 已强制推送到远程分支"
+            else
+                echo "ℹ️  远程分支不存在，跳过推送"
+            fi
         else
             echo "❌ 变基过程中出现冲突，请手动解决后继续"
             exit 1
