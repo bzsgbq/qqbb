@@ -38,11 +38,10 @@ while true; do
         git checkout -b "$branch_name"
         echo "✅ 已创建并切换到分支: $branch_name"
     fi
-
-    echo "=== 已经准备好! 您现在可以开始更新 qqbb 空间... ==="
     
     # 5. 开发阶段
-    read -p "更新完成后请按回车继续..."
+    echo -e "\033[1;33;5m⚠️  开始打开logseq更新笔记吧! 更新完成后请按回车继续...\033[0m"
+    read -p ""
     
     # 6. 提交更改
     git add .
@@ -63,7 +62,8 @@ while true; do
     
     # 8. 等待 PR 审查和合并
     echo "请等待 PR 审查和合并..."
-    read -p "PR 合并完成后按回车继续..."
+    echo -e "\033[1;35;5m⏳  快去通知baobao你新建了PR! 并等待baobao合并完成! 合并完成后按回车继续...\033[0m"
+    read -p ""
     
     # 9. 再次同步 fork（获取刚刚合并的更改）
     git checkout main
