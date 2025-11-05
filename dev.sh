@@ -46,6 +46,44 @@ sync_fork() {
     fi
 }
 
+# 检查分支是否需要更新到最新 main
+update_branch_to_main() {
+    local branch_name=$1
+    
+    # 确保我们在目标分支上
+    git checkout "$branch_name"
+    
+    # 检查分支是否基于最新的 main
+    if ! git merge-base --is-ancestor main "$branch_name"; then
+        echo "🔄 检测到分支 $branch_name 不是基于最新的 main，正在更新..."
+        
+        # 保存当前分支的更改（如果有）
+        if git diff-index --quiet HEAD --; then
+            # 没有未提交的更改，直接变基
+            git rebase main
+        else
+            # 有未提交的更改，先暂存
+            echo "⚠️  检测到未提交的更改，正在暂存并变基..."
+            git stash
+            git rebase main
+            git stash pop
+        fi
+        
+        # 检查变基是否成功
+        if [ $? -eq 0 ]; then
+            echo "✅ 分支 $branch_name 已更新到最新 main"
+            # 强制推送到远程（因为变基改变了历史）
+            git push -f origin "$branch_name"
+            echo "✅ 已强制推送到远程分支"
+        else
+            echo "❌ 变基过程中出现冲突，请手动解决后继续"
+            exit 1
+        fi
+    else
+        echo "✅ 分支 $branch_name 已经基于最新的 main"
+    fi
+}
+
 # 改进的登录状态检查
 check_gh_auth() {
     # 方法1: 使用 auth status 命令
@@ -128,7 +166,7 @@ wait_for_pr_merge() {
     local check_interval=10  # 每10秒检查一次
     
     echo "PR 链接: $pr_url"
-    echo "提示: 你可以按 Ctrl+C 中断等待，手动确认后继续"
+    echo "按 Ctrl+C 可中断等待并手动确认"
     echo "----------------------------------------"
     
     # 简化 GitHub CLI 检查
@@ -156,12 +194,11 @@ wait_for_pr_merge() {
         echo "✅ GitHub CLI 已认证"
     fi
     
-    local last_state=""
-    local dots=""
     local start_time=$(date +%s)
+    local spinner=("⣷" "⣯" "⣟" "⡿" "⢿" "⣻" "⣽" "⣾")
+    local spin_index=0
     
-    # 显示初始状态
-    echo -n "⏳ 检查 PR 状态中..."
+    echo -n "⏳ 等待 PR 合并中..."
     
     while true; do
         # 获取 PR 状态
@@ -215,18 +252,12 @@ wait_for_pr_merge() {
                 exit 1
             fi
         else
-            # PR 仍在 OPEN 状态，动态更新单行显示
-            # 更新动态点
-            case "${#dots}" in
-                0) dots="." ;;
-                1) dots=".." ;;
-                2) dots="..." ;;
-                3) dots="" ;;
-            esac
+            # 更新旋转动画
+            spin_index=$(( (spin_index + 1) % ${#spinner[@]} ))
             
             # 清空当前行并更新状态
             echo -ne "\r\033[K"
-            echo -n "⏳ PR 状态: ${state}${dots} (已等待 ${minutes}分${seconds}秒)"
+            echo -n "${spinner[$spin_index]} 等待中... (${minutes}分${seconds}秒)"
             
             sleep $check_interval
         fi
@@ -242,7 +273,10 @@ while true; do
 
     if [ -n "$existing_branch" ]; then
         echo "🔁 检测到已存在的更新分支: $existing_branch"
-        git checkout "$existing_branch"
+        
+        # 更新现有分支到最新的 main
+        update_branch_to_main "$existing_branch"
+        
         branch_name="$existing_branch"
     else
         # 如果没有，就新建一个
