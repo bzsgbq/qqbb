@@ -46,6 +46,26 @@ sync_fork() {
     fi
 }
 
+# 改进的登录状态检查
+check_gh_auth() {
+    # 方法1: 使用 auth status 命令
+    if gh auth status &>/dev/null; then
+        return 0
+    fi
+    
+    # 方法2: 尝试执行一个简单的 API 调用
+    if gh api user &>/dev/null; then
+        return 0
+    fi
+    
+    # 方法3: 检查是否有 token 配置
+    if gh config get oauth_token &>/dev/null; then
+        return 0
+    fi
+    
+    return 1
+}
+
 # 改进的 PR 状态检查函数
 get_pr_status() {
     local pr_url=$1
@@ -66,14 +86,12 @@ get_pr_status() {
         fi
         
         # 方法2: 如果上面失败，尝试分别获取状态和合并状态
-        if [ $? -ne 0 ]; then
-            state=$(gh pr view "$pr_url" --json state --jq '.state' 2>/dev/null)
-            merged=$(gh pr view "$pr_url" --json merged --jq '.merged' 2>/dev/null)
-            
-            if [ $? -eq 0 ] && [ -n "$state" ] && [ -n "$merged" ]; then
-                echo "$state,$merged,0"
-                return 0
-            fi
+        state=$(gh pr view "$pr_url" --json state --jq '.state' 2>/dev/null)
+        merged=$(gh pr view "$pr_url" --json merged --jq '.merged' 2>/dev/null)
+        
+        if [ $? -eq 0 ] && [ -n "$state" ] && [ -n "$merged" ]; then
+            echo "$state,$merged,0"
+            return 0
         fi
         
         # 方法3: 使用 PR API 直接查询
@@ -114,7 +132,7 @@ wait_for_pr_merge() {
     echo "提示: 你可以按 Ctrl+C 中断等待，手动确认后继续"
     echo "----------------------------------------"
     
-    # 验证 GitHub CLI 是否安装和登录
+    # 简化 GitHub CLI 检查
     if ! command -v gh &> /dev/null; then
         echo "❌ GitHub CLI (gh) 未安装，请先安装: https://cli.github.com/"
         read -p "PR 已合并? (y/n): " manual_confirm
@@ -126,15 +144,17 @@ wait_for_pr_merge() {
         fi
     fi
     
-    if ! gh auth status &> /dev/null; then
-        echo "❌ GitHub CLI 未登录，请先运行: gh auth login"
-        read -p "PR 已合并? (y/n): " manual_confirm
-        if [ "$manual_confirm" = "y" ] || [ "$manual_confirm" = "Y" ]; then
-            return 0
-        else
-            echo "❌ 操作已取消"
+    # 简化的登录检查 - 直接测试能否执行 API 调用
+    echo "🔐 检查 GitHub 认证状态..."
+    if ! check_gh_auth; then
+        echo "❌ GitHub CLI 认证失败，请运行: gh auth login"
+        echo "或者检查是否使用了正确的认证方式 (token 或 GitHub.com)"
+        read -p "继续尝试获取 PR 状态? (y/n): " continue_confirm
+        if [ "$continue_confirm" != "y" ] && [ "$continue_confirm" != "Y" ]; then
             exit 1
         fi
+    else
+        echo "✅ GitHub CLI 已认证"
     fi
     
     while true; do
@@ -146,6 +166,7 @@ wait_for_pr_merge() {
             echo "   - PR URL 不正确"
             echo "   - 网络连接问题"
             echo "   - 没有访问该 PR 的权限"
+            echo "   - GitHub API 限制"
             read -p "PR 已合并? (y/n): " manual_confirm
             if [ "$manual_confirm" = "y" ] || [ "$manual_confirm" = "Y" ]; then
                 echo "✅ 手动确认 PR 已合并"
