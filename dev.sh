@@ -157,11 +157,20 @@ wait_for_pr_merge() {
         echo "✅ GitHub CLI 已认证"
     fi
     
+    local last_state=""
+    local dots=""
+    local start_time=$(date +%s)
+    
+    # 显示初始状态
+    echo -n "⏳ 检查 PR 状态中..."
+    
     while true; do
         # 获取 PR 状态
         pr_status=$(get_pr_status "$pr_url")
         
         if [ $? -ne 0 ] || [ -z "$pr_status" ]; then
+            # 清空当前行并显示错误信息
+            echo -ne "\r\033[K"
             echo "⚠️  无法获取 PR 状态，可能的原因："
             echo "   - PR URL 不正确"
             echo "   - 网络连接问题"
@@ -169,10 +178,12 @@ wait_for_pr_merge() {
             echo "   - GitHub API 限制"
             read -p "PR 已合并? (y/n): " manual_confirm
             if [ "$manual_confirm" = "y" ] || [ "$manual_confirm" = "Y" ]; then
+                echo -ne "\r\033[K"
                 echo "✅ 手动确认 PR 已合并"
                 return 0
             else
-                echo "继续等待..."
+                echo -ne "\r\033[K"
+                echo -n "⏳ 继续等待 PR 状态检查..."
                 sleep $check_interval
                 continue
             fi
@@ -182,13 +193,21 @@ wait_for_pr_merge() {
         merged=$(echo "$pr_status" | cut -d',' -f2)
         pr_number=$(echo "$pr_status" | cut -d',' -f3)
         
-        echo "🔍 PR 状态: state=$state, merged=$merged"
+        # 计算已等待的时间
+        local current_time=$(date +%s)
+        local elapsed_time=$((current_time - start_time))
+        local minutes=$((elapsed_time / 60))
+        local seconds=$((elapsed_time % 60))
         
         if [ "$merged" = "true" ]; then
-            echo "✅ PR 已成功合并!"
+            # 清空当前行并显示成功信息
+            echo -ne "\r\033[K"
+            echo "✅ PR 已成功合并! (等待时间: ${minutes}分${seconds}秒)"
             return 0
         elif [ "$state" = "CLOSED" ]; then
-            echo "⚠️  PR 已关闭但未合并"
+            # 清空当前行并显示关闭信息
+            echo -ne "\r\033[K"
+            echo "⚠️  PR 已关闭但未合并 (等待时间: ${minutes}分${seconds}秒)"
             read -p "是否继续执行后续操作? (y/n): " continue_confirm
             if [ "$continue_confirm" = "y" ] || [ "$continue_confirm" = "Y" ]; then
                 return 0
@@ -197,8 +216,19 @@ wait_for_pr_merge() {
                 exit 1
             fi
         else
-            # PR 仍在 OPEN 状态
-            echo "⏳ PR 状态: $state - 等待合并中... (每${check_interval}秒检查一次)"
+            # PR 仍在 OPEN 状态，动态更新单行显示
+            # 更新动态点
+            case "${#dots}" in
+                0) dots="." ;;
+                1) dots=".." ;;
+                2) dots="..." ;;
+                3) dots="" ;;
+            esac
+            
+            # 清空当前行并更新状态
+            echo -ne "\r\033[K"
+            echo -n "⏳ PR 状态: ${state}${dots} (已等待 ${minutes}分${seconds}秒)"
+            
             sleep $check_interval
         fi
     done
@@ -223,7 +253,7 @@ while true; do
     fi
     
     # 开发阶段
-    echo -e "\033[1;33;5m⚠️  (1/2) 开始打开logseq更新笔记吧! 更新完成后请按回车继续...\033[0m"
+    echo -e "\033[1;33;5m⚠️  开始打开logseq更新笔记吧! 更新完成后请按回车继续...\033[0m"
     read -p ""
     
     # 提交更改
@@ -273,8 +303,6 @@ while true; do
             # 尝试从输出中手动提取
             pr_url=$(echo "$pr_create_output" | grep -o 'https://github.com/[^ ]*' | head -1)
         fi
-        
-        echo -e "\033[1;35;5m⏳  (2/2) 请审查并合并 PR!\033[0m"
     fi
     
     # 等待 PR 合并
