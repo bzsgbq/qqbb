@@ -4,10 +4,11 @@
 
 # 首先检查是否已配置上游仓库
 if ! git remote get-url upstream &> /dev/null; then
-    echo "未配置上游仓库，请先设置上游仓库:"
-    read -p "请输入上游仓库URL: " upstream_url
-    git remote add upstream "$upstream_url"
-    echo "✅ 已添加上游仓库: $upstream_url"
+    # echo "未配置上游仓库，请先设置上游仓库:"
+    # read -p "请输入上游仓库URL: " upstream_url
+    # git remote add upstream "$upstream_url"
+    # echo "✅ 已添加上游仓库: $upstream_url"
+    git remote add upstream "https://github.com/bzsgbq/qqbb"
 fi
 
 # 1. 同步 fork：从上游仓库获取最新代码
