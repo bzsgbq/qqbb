@@ -1,6 +1,9 @@
 [{:block/name "a",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "agent",
+  :block/created-at 1762328096377,
+  :block/updated-at 1762328096377}
  {:block/name "b",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
@@ -22,9 +25,18 @@
  {:block/name "card",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "chats",
+  :block/created-at 1762325939878,
+  :block/updated-at 1762325939878}
+ {:block/name "consciousness",
+  :block/created-at 1762328096369,
+  :block/updated-at 1762328096369}
  {:block/name "contents",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "context",
+  :block/created-at 1762328096387,
+  :block/updated-at 1762328096387}
  {:block/name "doing",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
@@ -40,39 +52,66 @@
  {:block/name "later",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "memory",
+  :block/created-at 1762328096377,
+  :block/updated-at 1762328096377}
+ {:block/name "model",
+  :block/created-at 1762328096740,
+  :block/updated-at 1762328096740}
  {:block/name "movies",
   :block/created-at 1762325844841,
   :block/updated-at 1762325844841}
+ {:block/name "multi-modal[nature",
+  :block/created-at 1762328096727,
+  :block/updated-at 1762328096727}
+ {:block/name "neuroscience",
+  :block/created-at 1762328096392,
+  :block/updated-at 1762328096392}
+ {:block/name "neuroscience-inspired",
+  :block/created-at 1762328096372,
+  :block/updated-at 1762328096372}
  {:block/name "nov 3rd, 2025",
   :block/created-at 1762325436838,
-  :block/updated-at 1762325546275}
+  :block/updated-at 1762329214245}
  {:block/name "nov 4th, 2025",
   :block/created-at 1762325433005,
-  :block/updated-at 1762325844841}
+  :block/updated-at 1762329217652}
  {:block/name "nov 5th, 2025",
   :block/created-at 1762325424843,
-  :block/updated-at 1762325424843}
+  :block/updated-at 1762326104946}
  {:block/name "now",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
- {:block/name "papars",
-  :block/created-at 1762325473189,
-  :block/updated-at 1762325473189}
  {:block/name "papers",
   :block/created-at 1762325557055,
   :block/updated-at 1762325557055}
+ {:block/name "psychology",
+  :block/created-at 1762328096381,
+  :block/updated-at 1762328096381}
  {:block/name "qinqin",
   :block/created-at 1762325777757,
   :block/updated-at 1762325777757}
+ {:block/name "soul",
+  :block/created-at 1762328096382,
+  :block/updated-at 1762328096382}
  {:block/name "todo",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "todos",
+  :block/created-at 1762325933902,
+  :block/updated-at 1762325933902}
+ {:block/name "vla",
+  :block/created-at 1762328096734,
+  :block/updated-at 1762328096734}
  {:block/name "wait",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
  {:block/name "waiting",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
+ {:block/name "world-model",
+  :block/created-at 1762328096743,
+  :block/updated-at 1762328096743}
  {:block/name "中文经典",
   :block/created-at 1762325811621,
   :block/updated-at 1762325811621}
