@@ -70,6 +70,9 @@
  {:block/name "neuroscience-inspired",
   :block/created-at 1762328096372,
   :block/updated-at 1762328096372}
+ {:block/name "nov 12th, 2025",
+  :block/created-at 1762524528871,
+  :block/updated-at 1762524528871}
  {:block/name "nov 3rd, 2025",
   :block/created-at 1762325436838,
   :block/updated-at 1762329214245}
@@ -78,10 +81,13 @@
   :block/updated-at 1762329281762}
  {:block/name "nov 5th, 2025",
   :block/created-at 1762325424843,
-  :block/updated-at 1762347043407}
+  :block/updated-at 1762524528874}
  {:block/name "nov 6th, 2025",
   :block/created-at 1762365160097,
   :block/updated-at 1762440426937}
+ {:block/name "nov 7th, 2025",
+  :block/created-at 1762495576830,
+  :block/updated-at 1762524456430}
  {:block/name "nov 8th, 2025",
   :block/created-at 1762440401325,
   :block/updated-at 1762440401325}
@@ -115,9 +121,6 @@
  {:block/name "todos",
   :block/created-at 1762325933902,
   :block/updated-at 1762325933902}
- {:block/name "todos-qinqin",
-  :block/created-at 1762429463762,
-  :block/updated-at 1762429463762}
  {:block/name "vla",
   :block/created-at 1762328096734,
   :block/updated-at 1762328096734}
