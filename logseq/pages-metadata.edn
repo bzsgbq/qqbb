@@ -76,6 +76,9 @@
  {:block/name "nov 12th, 2025",
   :block/created-at 1762524528871,
   :block/updated-at 1762524528871}
+ {:block/name "nov 13th, 2025",
+  :block/created-at 1763008774372,
+  :block/updated-at 1763039832125}
  {:block/name "nov 3rd, 2025",
   :block/created-at 1762325436838,
   :block/updated-at 1762524986072}
@@ -84,10 +87,10 @@
   :block/updated-at 1762524982304}
  {:block/name "nov 5th, 2025",
   :block/created-at 1762325424843,
-  :block/updated-at 1762524972269}
+  :block/updated-at 1763036143768}
  {:block/name "nov 6th, 2025",
   :block/created-at 1762365160097,
-  :block/updated-at 1762440426937}
+  :block/updated-at 1763036112782}
  {:block/name "nov 7th, 2025",
   :block/created-at 1762495576830,
   :block/updated-at 1762524456430}
@@ -103,6 +106,9 @@
  {:block/name "papers",
   :block/created-at 1762325557055,
   :block/updated-at 1762325557055}
+ {:block/name "prompts",
+  :block/created-at 1763036440359,
+  :block/updated-at 1763036440359}
  {:block/name "psychology",
   :block/created-at 1762328096381,
   :block/updated-at 1762328096381}
@@ -115,9 +121,9 @@
  {:block/name "soul",
   :block/created-at 1762328096382,
   :block/updated-at 1762328096382}
- {:block/name "test",
-  :block/created-at 1762346560902,
-  :block/updated-at 1762346560902}
+ {:block/name "spatial-intelligence",
+  :block/created-at 1763036293266,
+  :block/updated-at 1763036293266}
  {:block/name "todo",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
