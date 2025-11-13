@@ -70,18 +70,33 @@
  {:block/name "neuroscience-inspired",
   :block/created-at 1762328096372,
   :block/updated-at 1762328096372}
+ {:block/name "notes",
+  :block/created-at 1762524953156,
+  :block/updated-at 1762524953156}
+ {:block/name "nov 12th, 2025",
+  :block/created-at 1762524528871,
+  :block/updated-at 1762524528871}
  {:block/name "nov 3rd, 2025",
   :block/created-at 1762325436838,
-  :block/updated-at 1762329214245}
+  :block/updated-at 1762524986072}
  {:block/name "nov 4th, 2025",
   :block/created-at 1762325433005,
-  :block/updated-at 1762329281762}
+  :block/updated-at 1762524982304}
  {:block/name "nov 5th, 2025",
   :block/created-at 1762325424843,
-  :block/updated-at 1762347043407}
+  :block/updated-at 1762524972269}
  {:block/name "nov 6th, 2025",
   :block/created-at 1762365160097,
-  :block/updated-at 1762379112749}
+  :block/updated-at 1762440426937}
+ {:block/name "nov 7th, 2025",
+  :block/created-at 1762495576830,
+  :block/updated-at 1762524456430}
+ {:block/name "nov 8th, 2025",
+  :block/created-at 1762440401325,
+  :block/updated-at 1762440401325}
+ {:block/name "nov 9th, 2025",
+  :block/created-at 1762440381459,
+  :block/updated-at 1762440381459}
  {:block/name "now",
   :block/created-at 1762325509793,
   :block/updated-at 1762325509793}
@@ -95,8 +110,8 @@
   :block/created-at 1762325777757,
   :block/updated-at 1762325777757}
  {:block/name "readme",
-  :block/created-at 1762365160074,
-  :block/updated-at 1762365160074}
+  :block/created-at 1762425459134,
+  :block/updated-at 1762425459134}
  {:block/name "soul",
   :block/created-at 1762328096382,
   :block/updated-at 1762328096382}
@@ -124,6 +139,9 @@
  {:block/name "中文经典",
   :block/created-at 1762325811621,
   :block/updated-at 1762325811621}
+ {:block/name "中美关系",
+  :block/created-at 1762524953157,
+  :block/updated-at 1762524953157}
  {:block/name "粤语经典",
   :block/created-at 1762325785060,
   :block/updated-at 1762325785060}
